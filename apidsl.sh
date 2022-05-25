@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# CONTRIBUTION
+## Author: Tom Sapletta
+## Created Date: 23.05.2022
+
 ## EXAMPLE
 # ./apidsl.sh example2.txt
 # ./apidsl.sh example/example3.txt
@@ -7,7 +11,6 @@
 # ./apidsl.sh 'http("https://www.rezydent.de/").xpath("title")'
 
 ## CONFIG
-
 INPUT_FILE=$1
 INPUT_FOLDER=".apidsl"
 COMMAND_LANGUAGE="bash"
@@ -41,17 +44,6 @@ DSL_NEW="\n"
 DSL_EMPTY=""
 DSL_LOOP="forEachLine"
 
-# PRE processing
-# Jeśli będzie LOOP w tekscie
-# to podziel plik na 2
-# ten drugi wykonaj w loop pierwszej czesci
-
-# ITERATOR
-# global myArray+=(item)
-
-#cat $INPUT_FILE | sed -e "s/${DSL_DOT}/${DSL_NEW}/" > $CACHE_FILE
-#sed -i 's/${DSL_DOT}/${DSL_NEW}/' $INPUT_FILE
-#cat $INPUT_FILE
 
 ## START
 [ -z "$INPUT_FILE_PATH" ] && echo "INPUT_FILE is empty" && exit
@@ -66,30 +58,23 @@ while IFS= read -r line; do
   echo "${line}" >>$CACHE_FILE
 done <"$INPUT_FILE_PATH"
 
-#cat $CACHE_FILE | sed "s/${DSL_RIGHT_BRACE_DOT}/${DSL_NEW}/g" >$CACHE_FILE
 sed -i "s/${DSL_RIGHT_BRACE_DOT}/${DSL_NEW}/g" $CACHE_FILE
-#cat $CACHE_FILE | sed "s/${DSL_RIGHT_BRACE}/${DSL_NEW}/g" > $CACHE_FILE
 sed -i "s/${DSL_RIGHT_BRACE}/${DSL_NEW}/g" $CACHE_FILE
-#sed -i "s/${DSL_DOT}/${DSL_NEW}/" $CACHE_FILE
+
 # array to hold all lines read
 functions=()
 values=()
-# read line by line
+
+# PRE processing
 while IFS= read -r line; do
   [ -z "$line" ] && continue
-  #echo "${line:0:1}"
-  #echo "${line}"
-
-  IFS='('
+  IFS="$DSL_LEFT_BRACE"
   read -ra line <<<"$line"
-  #[ "${line:0:1}" = "${DSL_HASH}" ] && break
-  #echo ${line}
   index=0
   key=""
   value=""
 
   for i in "${line[@]}"; do
-    #echo ${line}
     index=$((index + 1))
     i="$(echo -e "${i}" | tr -d '[:space:]')"
 
@@ -108,9 +93,6 @@ while IFS= read -r line; do
   [ "$key" != "$i" ] && functions+=("$key") && values+=("$i")
 done <"$CACHE_FILE"
 
-#echo ${functions[*]}
-#echo ${values[*]}
-#exit
 length=${#functions[@]}
 loop=
 loop_functions=()
@@ -132,54 +114,45 @@ for ((i = 0; i < ${length}; i++)); do
 done
 
 if [ ! -z "$loop" ]; then
-    echo $BASH_LOOP_FILE
-    echo -n "./$BASH_LOOP_FILE " >> $BASH_FILE
+  echo $BASH_LOOP_FILE
+  echo -n "./$BASH_LOOP_FILE " >>$BASH_FILE
 
-    echo "#!/bin/bash" > $BASH_LOOP_FILE
-    #echo 'IFS="/n"' >>$BASH_LOOP_FILE
-    #echo 'read -ra newarr <<< "$1"' >>$BASH_LOOP_FILE
-    #echo 'for val in "${newarr[@]}"; do' >>$BASH_LOOP_FILE
-    echo "IFS='' read -d '' -r list" >>$BASH_LOOP_FILE
-    echo 'while IFS= read -r ITEM; do' >>$BASH_LOOP_FILE
-    echo '   echo "$ITEM"' >>$BASH_LOOP_FILE
-    #echo '' >>$BASH_LOOP_FILE
+  echo "#!/bin/bash" >$BASH_LOOP_FILE
+  echo "IFS='' read -d '' -r list" >>$BASH_LOOP_FILE
+  echo 'while IFS= read -r ITEM; do' >>$BASH_LOOP_FILE
+  echo '   echo "$ITEM"' >>$BASH_LOOP_FILE
 
-    length=${#loop_functions[@]}
-    first=1
-    first_val=1
-    for ((i = 0; i < ${length}; i++)); do
+  length=${#loop_functions[@]}
+  first=1
+  first_val=1
+  for ((i = 0; i < ${length}; i++)); do
 
-        #echo "${loop_functions[$i]}"
-        #echo "${loop_values[$i]}"
-        key="${loop_functions[$i]}"
-        value="${loop_values[$i]}"
+    #echo "${loop_functions[$i]}"
+    #echo "${loop_values[$i]}"
+    key="${loop_functions[$i]}"
+    value="${loop_values[$i]}"
 
-        if [ -z "$first" ]; then
-          [ ! -z "$first_val" ] && value='$ITEM' && echo -n " " >>$BASH_LOOP_FILE
+    if [ -z "$first" ]; then
+      [ ! -z "$first_val" ] && value='$ITEM' && echo -n " " >>$BASH_LOOP_FILE
 
-          echo -n "./$COMMAND_FOLDER/$key.sh $value" >>$BASH_LOOP_FILE
-          echo -n " | " >>$BASH_LOOP_FILE
-          first_val=
-        fi
-        first=
+      echo -n "./$COMMAND_FOLDER/$key.sh $value" >>$BASH_LOOP_FILE
+      echo -n " | " >>$BASH_LOOP_FILE
+      first_val=
+    fi
+    first=
 
-    done
-    truncate -s -3 $BASH_LOOP_FILE
+  done
+  truncate -s -3 $BASH_LOOP_FILE
 
-    echo "" >>$BASH_LOOP_FILE
-    #echo "done" >>$BASH_LOOP_FILE
-    echo 'done <<< "$list"' >>$BASH_LOOP_FILE
+  echo "" >>$BASH_LOOP_FILE
+  #echo "done" >>$BASH_LOOP_FILE
+  echo 'done <<< "$list"' >>$BASH_LOOP_FILE
 else
   truncate -s -3 $BASH_FILE
 fi
 
-
-#sed 's/|//g' $BASH_FILE
-
 #cat $CACHE_FILE
 #cat $BASH_FILE
 #cat $BASH_LOOP_FILE
-#echo ""
-#exit
 
 ./$BASH_FILE
