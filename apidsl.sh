@@ -2,6 +2,7 @@
 
 ## EXAMPLE
 # ./apidsl.sh example2.txt
+# ./apidsl.sh example/example3.txt
 # ./apidsl.sh "http("https://www.rezydent.de/").xpath("title")"
 # ./apidsl.sh 'http("https://www.rezydent.de/").xpath("title")'
 
@@ -9,7 +10,9 @@
 
 INPUT_FILE=$1
 INPUT_FOLDER=".apidsl"
-COMMAND_FOLDER="apidsl"
+COMMAND_LANGUAGE="bash"
+COMMAND_FOLDER="apidsl/$COMMAND_LANGUAGE"
+CACHE_FOLDER=".apidsl"
 #
 INPUT_FTIME="$(date +%s).txt"
 INPUT_FILE_PATH="$INPUT_FOLDER/$INPUT_FTIME"
@@ -24,6 +27,7 @@ fi
 
 CACHE_FILE="$INPUT_FILE_PATH.cache.txt"
 BASH_FILE="$INPUT_FILE_PATH.sh"
+BASH_LOOP_FILE="$CACHE_FOLDER/$INPUT_FTIME.loop.sh"
 #Create temporary file with new line in place
 #cat $INPUT_FILE | sed -e "s/)/\n/" > $CACHE_FILE
 DSL_HASH="#"
@@ -35,6 +39,16 @@ DSL_RIGHT_BRACE_SEMICOLON=");"
 DSL_RIGHT_BRACE_DOT=")."
 DSL_NEW="\n"
 DSL_EMPTY=""
+DSL_LOOP="forEachLine"
+
+# PRE processing
+# Jeśli będzie LOOP w tekscie
+# to podziel plik na 2
+# ten drugi wykonaj w loop pierwszej czesci
+
+# ITERATOR
+# global myArray+=(item)
+
 #cat $INPUT_FILE | sed -e "s/${DSL_DOT}/${DSL_NEW}/" > $CACHE_FILE
 #sed -i 's/${DSL_DOT}/${DSL_NEW}/' $INPUT_FILE
 #cat $INPUT_FILE
@@ -57,6 +71,9 @@ sed -i "s/${DSL_RIGHT_BRACE_DOT}/${DSL_NEW}/g" $CACHE_FILE
 #cat $CACHE_FILE | sed "s/${DSL_RIGHT_BRACE}/${DSL_NEW}/g" > $CACHE_FILE
 sed -i "s/${DSL_RIGHT_BRACE}/${DSL_NEW}/g" $CACHE_FILE
 #sed -i "s/${DSL_DOT}/${DSL_NEW}/" $CACHE_FILE
+# array to hold all lines read
+functions=()
+values=()
 # read line by line
 while IFS= read -r line; do
   [ -z "$line" ] && continue
@@ -75,9 +92,6 @@ while IFS= read -r line; do
     #echo ${line}
     index=$((index + 1))
     i="$(echo -e "${i}" | tr -d '[:space:]')"
-    #[ "${i}" == "${DSL_SEMICOLON}" ] && echo "" >> $BASH_FILE
-    #echo "${i}"
-    #[ "${i}" = "#" ] && break
 
     if [ $index -gt 2 ]; then
       echo $index "break"
@@ -90,15 +104,82 @@ while IFS= read -r line; do
 
   done
 
-  [ "$key" = "$i" ] && echo -n "./$COMMAND_FOLDER/$key.sh" >>$BASH_FILE
-  [ "$key" != "$i" ] && echo -n "./$COMMAND_FOLDER/$key.sh $i" >>$BASH_FILE
-  echo -n " | " >>$BASH_FILE
+  [ "$key" = "$i" ] && functions+=("$key") && values+=("")
+  [ "$key" != "$i" ] && functions+=("$key") && values+=("$i")
 done <"$CACHE_FILE"
 
+#echo ${functions[*]}
+#echo ${values[*]}
+#exit
+length=${#functions[@]}
+loop=
+loop_functions=()
+loop_values=()
+for ((i = 0; i < ${length}; i++)); do
+  #echo "$i"
+  #echo "${functions[$i]}"
+  #echo "${values[$i]}"
+  key="${functions[$i]}"
+  value="${values[$i]}"
+  [ "$key" == "split" ] && loop="1"
+  if [ -z "$loop" ]; then
+    echo -n "./$COMMAND_FOLDER/$key.sh $value" >>$BASH_FILE
+    echo -n " | " >>$BASH_FILE
+  else
+    loop_functions+=("$key")
+    loop_values+=("$value")
+  fi
+done
+
+if [ ! -z "$loop" ]; then
+    echo $BASH_LOOP_FILE
+    echo -n "./$BASH_LOOP_FILE " >> $BASH_FILE
+
+    echo "#!/bin/bash" > $BASH_LOOP_FILE
+    #echo 'IFS="/n"' >>$BASH_LOOP_FILE
+    #echo 'read -ra newarr <<< "$1"' >>$BASH_LOOP_FILE
+    #echo 'for val in "${newarr[@]}"; do' >>$BASH_LOOP_FILE
+    echo "IFS='' read -d '' -r list" >>$BASH_LOOP_FILE
+    echo 'while IFS= read -r ITEM; do' >>$BASH_LOOP_FILE
+    echo '   echo "$ITEM"' >>$BASH_LOOP_FILE
+    #echo '' >>$BASH_LOOP_FILE
+
+    length=${#loop_functions[@]}
+    first=1
+    first_val=1
+    for ((i = 0; i < ${length}; i++)); do
+
+        #echo "${loop_functions[$i]}"
+        #echo "${loop_values[$i]}"
+        key="${loop_functions[$i]}"
+        value="${loop_values[$i]}"
+
+        if [ -z "$first" ]; then
+          [ ! -z "$first_val" ] && value='$ITEM' && echo -n " " >>$BASH_LOOP_FILE
+
+          echo -n "./$COMMAND_FOLDER/$key.sh $value" >>$BASH_LOOP_FILE
+          echo -n " | " >>$BASH_LOOP_FILE
+          first_val=
+        fi
+        first=
+
+    done
+    truncate -s -3 $BASH_LOOP_FILE
+
+    echo "" >>$BASH_LOOP_FILE
+    #echo "done" >>$BASH_LOOP_FILE
+    echo 'done <<< "$list"' >>$BASH_LOOP_FILE
+else
+  truncate -s -3 $BASH_FILE
+fi
+
+
 #sed 's/|//g' $BASH_FILE
-truncate -s -3 $BASH_FILE
 
 #cat $CACHE_FILE
 #cat $BASH_FILE
+#cat $BASH_LOOP_FILE
 #echo ""
+#exit
+
 ./$BASH_FILE
