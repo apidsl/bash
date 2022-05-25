@@ -36,7 +36,7 @@ I am using it to build multiplatform scripts, where the same sentence will be ex
 ## Supported technologies  [<span style='font-size:20px;'>&#x270D;</span>](https://github.com/apidsl/bash/edit/main/DOCS/SUPPORTED.md)
 
 
-## Languages:
+### Languages:
 + js
 + php
 + bash
@@ -120,7 +120,8 @@ git("clone","https://github.com/laurivan/simpleargs.git")
 + mapowanie API
   + Skąd pobierać dane autoryzacyjne?
 + Example with plainedit
-
++  more loop options
++ many loop in one sentence
 
 install
 https://github.com/apidsl/ultimate-nmap-parser

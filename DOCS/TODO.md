@@ -7,7 +7,8 @@
 + mapowanie API
   + Skąd pobierać dane autoryzacyjne?
 + Example with plainedit
-
++  more loop options
++ many loop in one sentence
 
 install
 https://github.com/apidsl/ultimate-nmap-parser

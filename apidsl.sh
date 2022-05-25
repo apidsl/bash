@@ -113,6 +113,9 @@ for ((i = 0; i < ${length}; i++)); do
   fi
 done
 
+## LOOP with split function
+## TODO: more loop options
+## TODO: many loop in one sentence
 if [ ! -z "$loop" ]; then
   echo $BASH_LOOP_FILE
   echo -n "./$BASH_LOOP_FILE " >>$BASH_FILE
