@@ -5,7 +5,7 @@ COMMANDS=$1
 #lines=()
 IFS='' read -d '' -r list
 while IFS= read -r line; do
-    pwd
+    #pwd
     echo "$line"
     #echo $line | ./apidsl.sh $COMMANDS
 done <<< "$list"
