@@ -104,7 +104,7 @@ for ((i = 0; i < ${length}; i++)); do
   #echo "${functions[$i]}"
   #echo "${values[$i]}"
   # Replace dot to slash for path at installed packages
-  key="${functions[$i]/./\\/}"
+  key="${functions[$i]/./\/}"
   value="${values[$i]}"
   [ "$key" == "split" ] && loop="1"
   if [ -z "$loop" ]; then
