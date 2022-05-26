@@ -1,12 +1,12 @@
 
 ![logo.apidsl.com](https://logo.apidsl.com/1/cover.png)
 
-# [apidsl.com](https://www.apidsl.com/) [<span style='font-size:20px;'>&#x270D;</span>](https://github.com/apidsl/bash/edit/main/DOCS/MENU.md) 
+# [bash.apidsl.com](https://bash.apidsl.com/) [<span style='font-size:20px;'>&#x270D;</span>](https://github.com/apidsl/bash/edit/main/DOCS/MENU.md) 
 
 + [Strona informacyjna: www.apidsl.com](https://www.apidsl.com/)
 + [Dokumentacja - docs.apidsl.com](https://docs.apidsl.com/)
 + [Logotyp: logo.apidsl.com](https://logo.apidsl.com/)
-+ [Pryzkłady - examples.apidsl.com](http://examples.apidsl.com)
++ [Przykłady - examples.apidsl.com](http://examples.apidsl.com)
 
 + [LICENSE](../LICENSE)
 
@@ -114,13 +114,24 @@ git("clone","https://github.com/laurivan/simpleargs.git")
 
 ## TODO [<span style='font-size:20px;'>&#x270D;</span>](https://github.com/apidsl/bash/edit/main/DOCS/TODO.md)
 
+### Zalezności ładowane z github
++ zamiast xpath - ładowanie zalezności przez skrypt github 
++ letPath - przygotować
+  https://github.com/letpath/bash
+
+### Mapowanie
+
 + mapowanie projektów z git
 + mapowanie funkcji z linuxa
-+ mapowaine funckji uslug w linux
++ mapowanie funckji uslug w linux
 + mapowanie API
   + Skąd pobierać dane autoryzacyjne?
+ 
+
+
+### Praktyczne przykłady
 + Example with plainedit
-+  more loop options
++ more loop options
 + many loop in one sentence
 
 install

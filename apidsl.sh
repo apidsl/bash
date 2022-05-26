@@ -16,6 +16,7 @@ INPUT_FOLDER=".apidsl"
 COMMAND_LANGUAGE="bash"
 COMMAND_FOLDER="apidsl/$COMMAND_LANGUAGE"
 CACHE_FOLDER=".apidsl"
+mkdir -p "$CACHE_FOLDER"
 #
 INPUT_FTIME="$(date +%s).txt"
 INPUT_FILE_PATH="$INPUT_FOLDER/$INPUT_FTIME"
@@ -27,6 +28,7 @@ else
   # if file exist copy to folder
   cp $INPUT_FILE $INPUT_FILE_PATH
 fi
+
 
 CACHE_FILE="$INPUT_FILE_PATH.cache.txt"
 BASH_FILE="$INPUT_FILE_PATH.sh"

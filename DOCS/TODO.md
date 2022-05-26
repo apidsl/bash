@@ -1,13 +1,24 @@
 
 ## TODO [<span style='font-size:20px;'>&#x270D;</span>](https://github.com/apidsl/bash/edit/main/DOCS/TODO.md)
 
+### Zalezności ładowane z github
++ zamiast xpath - ładowanie zalezności przez skrypt github 
++ letPath - przygotować
+  https://github.com/letpath/bash
+
+### Mapowanie
+
 + mapowanie projektów z git
 + mapowanie funkcji z linuxa
-+ mapowaine funckji uslug w linux
++ mapowanie funckji uslug w linux
 + mapowanie API
   + Skąd pobierać dane autoryzacyjne?
+ 
+
+
+### Praktyczne przykłady
 + Example with plainedit
-+  more loop options
++ more loop options
 + many loop in one sentence
 
 install
