@@ -59,39 +59,21 @@ I am using it to build multiplatform scripts, where the same sentence will be ex
 ## Docs [<span style='font-size:20px;'>&#x270D;</span>](https://github.com/apidsl/bash/edit/main/DOCS/DOCS.md)
 
 
-### Co robi apidsl?
-
-Parsuje skrypty zapisywane w formacie: funkcja("parametr") i uruchamia w shellu
-
-### Parsowanie
-
-Parsowanie następuje na dwie zmienne:
-
-key: funkcja
-value: parametr
-
-W rezultacie zmiast pisać:
-
-    grep -ri "$FIND" "$WHOIS_FILE"
-
-piszemy:
-
-    grep("ri","$FIND", "$WHOIS_FILE").print()
 
 
-### Komentarze
+### Zalezności ładowane z github
 
-remove comments tags
-+ //
-+ #
++ zamiast xpath - ładowanie zalezności przez skrypt github
++ letPath - przygotować
+  https://github.com/letpath/bash
 
-### Korzyści
-+ uniwersalny format zapisu niezależnie od środowiska
-+ wykorzystywanie bibliotek i używanie tylko wybranych funkcji
-+ uruchamianie usług dostępnych w środowisku lokalnym 
-+ uruchamianie API dostępnych na zewnątrz
-+ możliwość zmiany uprawnień dla każdego skryptu zależnie od użytkownika
-+ możlwiość dodawania własnych funkcji
+
+### Another examples
+
+get options
+https://reposhub.com/linux/system-utilities/ko1nksm-getoptions.html
+
+https://github.com/ko1nksm/getoptions
 
 
 
@@ -114,18 +96,15 @@ git("clone","https://github.com/laurivan/simpleargs.git")
 
 ## TODO [<span style='font-size:20px;'>&#x270D;</span>](https://github.com/apidsl/bash/edit/main/DOCS/TODO.md)
 
-### Zalezności ładowane z github
-+ zamiast xpath - ładowanie zalezności przez skrypt github 
-+ letPath - przygotować
-  https://github.com/letpath/bash
-
 ### Mapowanie
 
-+ mapowanie projektów z git
-+ mapowanie funkcji z linuxa
-+ mapowanie funckji uslug w linux
-+ mapowanie API
-  + Skąd pobierać dane autoryzacyjne?
+#### mapowanie funkcji z linuxa:
+curl().grep("ri",)
+
+#### mapowanie funckji uslug w linux
+
+#### mapowanie API
++ Skąd pobierać dane autoryzacyjne?
  
 
 
@@ -136,6 +115,9 @@ git("clone","https://github.com/laurivan/simpleargs.git")
 
 install
 https://github.com/apidsl/ultimate-nmap-parser
+
+
+### Inframonit
 
 skanuje hosty
 git clone https://github.com/desecsecurity/parsing_html_bash
@@ -167,29 +149,13 @@ jquery.get("simpleargs")
 .git("push");
 
 
-curl().grep("ri",)
 
 
+### Preprocessing
 
-kazdy z tych jest w fodlerze ze skryptami, gdzie kolejno podaje sie wartosci
+Każdy z tych jest w fodlerze ze skryptami, gdzie kolejno podaje sie wartosci
 + values
 + context - before, next command
-
-
-
-convert camel to .sh bash file
-and execute
-each time is ;
-
-
-
----
-
-get options
-https://reposhub.com/linux/system-utilities/ko1nksm-getoptions.html
-
-https://github.com/ko1nksm/getoptions
-
 
 
 ---

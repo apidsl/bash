@@ -1,18 +1,15 @@
 
 ## TODO [<span style='font-size:20px;'>&#x270D;</span>](https://github.com/apidsl/bash/edit/main/DOCS/TODO.md)
 
-### Zalezności ładowane z github
-+ zamiast xpath - ładowanie zalezności przez skrypt github 
-+ letPath - przygotować
-  https://github.com/letpath/bash
-
 ### Mapowanie
 
-+ mapowanie projektów z git
-+ mapowanie funkcji z linuxa
-+ mapowanie funckji uslug w linux
-+ mapowanie API
-  + Skąd pobierać dane autoryzacyjne?
+#### mapowanie funkcji z linuxa:
+curl().grep("ri",)
+
+#### mapowanie funckji uslug w linux
+
+#### mapowanie API
++ Skąd pobierać dane autoryzacyjne?
  
 
 
@@ -23,6 +20,9 @@
 
 install
 https://github.com/apidsl/ultimate-nmap-parser
+
+
+### Inframonit
 
 skanuje hosty
 git clone https://github.com/desecsecurity/parsing_html_bash
@@ -54,26 +54,10 @@ jquery.get("simpleargs")
 .git("push");
 
 
-curl().grep("ri",)
 
 
+### Preprocessing
 
-kazdy z tych jest w fodlerze ze skryptami, gdzie kolejno podaje sie wartosci
+Każdy z tych jest w fodlerze ze skryptami, gdzie kolejno podaje sie wartosci
 + values
 + context - before, next command
-
-
-
-convert camel to .sh bash file
-and execute
-each time is ;
-
-
-
----
-
-get options
-https://reposhub.com/linux/system-utilities/ko1nksm-getoptions.html
-
-https://github.com/ko1nksm/getoptions
-
