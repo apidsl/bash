@@ -29,7 +29,6 @@ else
   cp $INPUT_FILE $INPUT_FILE_PATH
 fi
 
-
 CACHE_FILE="$INPUT_FILE_PATH.cache.txt"
 BASH_FILE="$INPUT_FILE_PATH.sh"
 BASH_LOOP_FILE="$CACHE_FOLDER/$INPUT_FTIME.loop.sh"
@@ -45,7 +44,6 @@ DSL_RIGHT_BRACE_DOT=")."
 DSL_NEW="\n"
 DSL_EMPTY=""
 DSL_LOOP="forEachLine"
-
 
 ## START
 [ -z "$INPUT_FILE_PATH" ] && echo "INPUT_FILE is empty" && exit
@@ -107,6 +105,7 @@ for ((i = 0; i < ${length}; i++)); do
   key="${functions[$i]/./\/}"
   value="${values[$i]}"
   [ "$key" == "split" ] && loop="1"
+  #[ "$key" == "filesRecursive" ] && loop="1"
   if [ -z "$loop" ]; then
     echo -n "./$COMMAND_FOLDER/$key.sh $value" >>$BASH_FILE
     echo -n " | " >>$BASH_FILE
@@ -126,7 +125,7 @@ if [ ! -z "$loop" ]; then
   echo "#!/bin/bash" >$BASH_LOOP_FILE
   echo "IFS='' read -d '' -r list" >>$BASH_LOOP_FILE
   echo 'while IFS= read -r ITEM; do' >>$BASH_LOOP_FILE
-  echo '   echo "$ITEM"' >>$BASH_LOOP_FILE
+  #echo ' echo "$ITEM"' >>$BASH_LOOP_FILE
 
   length=${#loop_functions[@]}
   first=1
@@ -139,11 +138,15 @@ if [ ! -z "$loop" ]; then
     value="${loop_values[$i]}"
 
     if [ -z "$first" ]; then
-      [ ! -z "$first_val" ] && value='$ITEM' && echo -n " " >>$BASH_LOOP_FILE
-
       echo -n "./$COMMAND_FOLDER/$key.sh $value" >>$BASH_LOOP_FILE
-      echo -n " | " >>$BASH_LOOP_FILE
+      echo -n ' | ' >>$BASH_LOOP_FILE
       first_val=
+    else
+      #value='$ITEM'
+      echo -n ' ' >>$BASH_LOOP_FILE
+      echo -n 'echo "$ITEM" | ' >>$BASH_LOOP_FILE
+      #echo -n "./$COMMAND_FOLDER/$key.sh $value" >>$BASH_LOOP_FILE
+      #echo -n " | " >>$BASH_LOOP_FILE
     fi
     first=
 

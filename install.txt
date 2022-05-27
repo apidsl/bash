@@ -1,0 +1,5 @@
+https://github.com/apimacro/bash.git apimacro
+https://github.com/grabWHOIS/bash.git grabwhois
+https://github.com/reactphp/dns reactphp
+https://github.com/apidsl/bash apidsl
+https://github.com/plainedit/bash plainedit
