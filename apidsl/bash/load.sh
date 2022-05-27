@@ -1,5 +1,5 @@
 #!/bin/bash
-#IFS='' read -d '' -r HTML
 FILENAME=$1
-cat $FILENAME
+[ -z "$FILENAME" ] && IFS='' read -d '' -r FILENAME
+[ ! -z "$FILENAME" ] && cat $FILENAME
 
