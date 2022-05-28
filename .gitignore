@@ -1,3 +1,5 @@
+DOCS/PROJECTS.md
+DOCS/PROJECTS_LOCAL.md
 1/
 .idea
 # Logs
@@ -105,3 +107,4 @@ dist
 # TernJS port file
 .tern-port
 apidsl/bash/letpath
+flatedit
