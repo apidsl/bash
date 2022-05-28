@@ -35,6 +35,7 @@ BASH_LOOP_FILE="$CACHE_FOLDER/$INPUT_FTIME.loop.sh"
 #Create temporary file with new line in place
 #cat $INPUT_FILE | sed -e "s/)/\n/" > $CACHE_FILE
 DSL_HASH="#"
+DSL_SLASHSLASH='//'
 DSL_DOT="."
 DSL_SEMICOLON=";"
 DSL_LEFT_BRACE="("
@@ -54,7 +55,9 @@ echo "" >$CACHE_FILE
 while IFS= read -r line; do
   [ -z "$line" ] && continue
   #echo "${line:0:1}"
+  # Remove Comments
   [ "${line:0:1}" == "${DSL_HASH}" ] && continue
+  [ "${line:0:1}" == "${DSL_SLASHSLASH}" ] && continue
   echo "${line}" >>$CACHE_FILE
 done <"$INPUT_FILE_PATH"
 
