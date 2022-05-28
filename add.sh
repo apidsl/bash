@@ -13,35 +13,3 @@ name=$3
 ## Packages
 cd "apidsl/$language" && git clone $git_url $name && cd .. && cd ..
 echo "apidsl/$language/$name" >> .gitignore
-apidsl.sh
-del.sh
-install.sh
-loop.sh
-readme.sh
-update.sh
-
-
-apidsl.sh
-del.sh
-install.sh
-loop.sh
-readme.sh
-update.sh
-
-
-apidsl.sh
-del.sh
-install.sh
-loop.sh
-readme.sh
-update.sh
-
-
-apidsl.sh
-del.sh
-install.sh
-loop.sh
-readme.sh
-update.sh
-
-
