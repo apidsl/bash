@@ -96,6 +96,7 @@ while IFS= read -r line; do
   [ "$key" != "$i" ] && functions+=("$key") && values+=("$i")
 done <"$CACHE_FILE"
 
+CURRENT_FOLDER=$(pwd)
 length=${#functions[@]}
 loop=
 loop_functions=()
@@ -105,12 +106,20 @@ for ((i = 0; i < ${length}; i++)); do
   #echo "${functions[$i]}"
   #echo "${values[$i]}"
   # Replace dot to slash for path at installed packages
-  key="${functions[$i]/./\/}"
+  #key="${functions[$i]/./\/}"
+  key="${functions[$i]}"
+  IFS='.' read -a keys <<< "$key"
   value="${values[$i]}"
+  CMD_FILE_NAME=$key
+  CMD_FOLDER_NAME=
+  [ ! -z "${keys[1]}" ] && CMD_FILE_NAME=${keys[1]} && CMD_FOLDER_NAME=/${keys[0]}
   [ "$key" == "split" ] && loop="1"
   #[ "$key" == "filesRecursive" ] && loop="1"
   if [ -z "$loop" ]; then
-    echo -n "./$COMMAND_FOLDER/$key.sh $value" >>$BASH_FILE
+    echo -n "cd ${COMMAND_FOLDER}${CMD_FOLDER_NAME} && " >>$BASH_FILE
+    echo -n "./${CMD_FILE_NAME}.sh $value" >>$BASH_FILE
+    echo -n " && cd $CURRENT_FOLDER " >>$BASH_FILE
+
     echo -n " | " >>$BASH_FILE
   else
     loop_functions+=("$key")
