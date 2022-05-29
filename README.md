@@ -73,11 +73,22 @@ Here are 3 levels of apifoundation solutions
 ## Contribution [<span style='font-size:20px;'>&#x270D;</span>](https://github.com/inframonit/bash/edit/main/DOCS/CONTRIBUTION.md)
 
 
+Solutions for development:
+
 Install dependencies after created project
 ```bash
 curl https://raw.githubusercontent.com/apifork/bash/main/apifork.sh -o apifork
-echo "apifork.txt" > ".apifork"
-echo "" > "apifork.txt"
+echo "https://github.com/flatedit/bash.git flatedit" > "apifork.dev.txt"
+./apifork install apifork.dev.txt
+```
+
+Edit documentation with flatedit
+```bash
+echo "#!/bin/bash" > "readme"
+echo "./flatedit/readme.sh readme.txt" > "readme"
+echo "./DOCS/MENU.md" >> "readme.txt"
+echo "./DOCS/ABOUT.md" >> "readme.txt"
+echo "./DOCS/FOOT.md" >> "readme.txt"
 ```
 
 ### Update documentation
