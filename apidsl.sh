@@ -1,14 +1,15 @@
 #!/bin/bash
+# https://github.com/apidsl/bash
+
+## USAGE:
+# apidsl example2.txt
+# apidsl example/example3.txt
+# apidsl "http("https://www.rezydent.de/").xpath("title")"
+
 
 # CONTRIBUTION
 ## Author: Tom Sapletta
-## Created Date: 23.05.2022
-
-## EXAMPLE
-# ./apidsl.sh example2.txt
-# ./apidsl.sh example/example3.txt
-# ./apidsl.sh "http("https://www.rezydent.de/").xpath("title")"
-# ./apidsl.sh 'http("https://www.rezydent.de/").xpath("title")'
+## Created Date: 01.08.2023
 
 ## CONFIG
 INPUT_FILE=$1
